@@ -1,0 +1,50 @@
+{
+  "id": "dependence-positive-control",
+  "statement": "For the declared synthetic L1-style AR(1) positive control, a predeclared model-based interval compatible with the known generating dependence structure returns Supported--L1 under the declared synthetic boundary.",
+  "evidence_profile": "L1",
+  "boundary": {
+    "energy": "Deterministic simulated percentage block contrasts; no physical GPU, meter or server energy is measured.",
+    "service": "Synthetic protocol classification behavior for a declared 150-block AR(1) record.",
+    "exclusions": ["sensor validity", "GPU energy", "deployment performance", "environmental outcome", "fitted autocorrelation estimation"]
+  },
+  "functional_unit": "simulated percentage block contrast",
+  "threshold_rationale": {
+    "sesoi_percent": 2.0,
+    "direction_fraction": 0.80,
+    "simulation_draws": 100000,
+    "random_seed": 20260720,
+    "status": "Synthetic planning control; not a universal operational threshold."
+  },
+  "declared_required_gates": {
+    "validity": ["boundary_declared", "required_gate_set_complete", "runtime_provenance_status", "design_integrity", "mapping_period_separability", "serial_dependence_assessed", "continuous_duration", "telemetry_gap", "endpoint_bracketing", "integration_stability"],
+    "substantive": ["functional_unit_declared", "fixed_work_unit", "benefit_threshold"],
+    "precision": ["interval_rule", "dependence_compatible_interval", "block_replication", "directional_agreement"]
+  },
+  "gates": {
+    "validity": {
+      "boundary_declared": {"status": "pass", "evidence": "The synthetic energy and service boundary explicitly exclude physical energy."},
+      "required_gate_set_complete": {"status": "pass", "evidence": "The evaluator derives and compares the current release L1 registry gate set."},
+      "runtime_provenance_status": {"status": "pass", "evidence": "The deterministic generator, seed and exact AR(1) parameters are retained."},
+      "design_integrity": {"status": "pass", "evidence": "Stationary AR(1) control with fixed, declared generating parameters; no physical GPU mapping is represented."},
+      "mapping_period_separability": {"status": "pass", "evidence": "No GPU map or period factor occurs in the synthetic control."},
+      "serial_dependence_assessed": {"status": "pass", "evidence": "The generating AR(1)=0.65 dependence structure is predeclared and known for this model-matched control."},
+      "continuous_duration": {"status": "pass", "evidence": "The planned synthetic record contains 150 sequential blocks; no request-window duration claim is made."},
+      "telemetry_gap": {"status": "pass", "evidence": "No telemetry sampling occurs; the synthetic sequence is complete by construction."},
+      "endpoint_bracketing": {"status": "pass", "evidence": "No request-window integration occurs; the synthetic sequence has defined block endpoints."},
+      "integration_stability": {"status": "pass", "evidence": "No numerical power integration occurs; the declared statistic is the generated block mean."}
+    },
+    "substantive": {
+      "functional_unit_declared": {"status": "pass", "evidence": "Simulated percentage block contrast."},
+      "fixed_work_unit": {"status": "pass", "evidence": "150 generated blocks under fixed AR(1) parameters."},
+      "benefit_threshold": {"status": "pass", "evidence": "True 5% effect exceeds the declared 2% SESOI in the positive-control scenario."}
+    },
+    "precision": {
+      "interval_rule": {"status": "pass", "evidence": "Predeclared one-sided 95% normal lower bound using the exact AR(1) mean variance under the known generator."},
+      "dependence_compatible_interval": {"status": "pass", "evidence": "The interval matches the stationary AR(1)=0.65 generator by construction; this is not an estimated-data claim."},
+      "block_replication": {"status": "pass", "evidence": "150 blocks are generated for each deterministic draw."},
+      "directional_agreement": {"status": "pass", "evidence": "The positive-control condition applies the declared 80% favorable-block guard."}
+    }
+  },
+  "permitted_wording": "Supported only as a synthetic, model-matched L1-style protocol positive control; it does not establish a physical energy, meter, deployment or environmental effect.",
+  "prohibited_wording": ["GPU energy reduction", "meter validation", "whole-system reduction", "carbon reduction", "autocorrelation estimator validation"]
+}

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/llm-energy-claim-artifact/claim-object.schema.json",
+  "title": "Registry-relative claim object",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "statement", "evidence_profile", "boundary", "functional_unit", "threshold_rationale", "declared_required_gates", "gates", "evidence_adjudications", "permitted_wording", "claim_owner_id", "assessment_time_utc", "evidence_manifest_id", "evidence_manifest_sha256", "evidence_manifest_version", "minimum_manifest_sequence", "local_integrity_token_sha256"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "statement": {"type": "string", "minLength": 1},
+    "evidence_profile": {"enum": ["L0", "L1", "L2", "L3", "L4"]},
+    "boundary": {"$ref": "#/$defs/boundary"},
+    "functional_unit": {"type": "string", "minLength": 1},
+    "threshold_rationale": {"type": "object", "minProperties": 1},
+    "declared_required_gates": {"$ref": "#/$defs/gateDeclaration"},
+    "gates": {"$ref": "#/$defs/gateRecords"},
+    "evidence_adjudications": {"$ref": "#/$defs/adjudications"},
+    "permitted_wording": {"type": "string", "minLength": 1},
+    "claim_owner_id": {"type": "string", "minLength": 1},
+    "assessment_time_utc": {"type": "string", "minLength": 1},
+    "evidence_manifest_id": {"type": "string", "minLength": 1},
+    "evidence_manifest_sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "evidence_manifest_version": {"type": "string", "minLength": 1},
+    "minimum_manifest_sequence": {"type": "integer", "minimum": 0},
+    "local_integrity_token_sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}
+  },
+  "$defs": {
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["energy", "service", "exclusions"],
+      "properties": {
+        "energy": {"type": "string", "minLength": 1},
+        "service": {"type": "string", "minLength": 1},
+        "exclusions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "familyArrays": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["validity", "substantive", "precision"],
+      "properties": {
+        "validity": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "substantive": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "precision": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "gateDeclaration": {"$ref": "#/$defs/familyArrays"},
+    "gateObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {"status": {"enum": ["pass", "fail", "missing", "invalid"]}}
+    },
+    "familyGateObjects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["validity", "substantive", "precision"],
+      "properties": {
+        "validity": {"type": "object", "additionalProperties": {"$ref": "#/$defs/gateObservation"}},
+        "substantive": {"type": "object", "additionalProperties": {"$ref": "#/$defs/gateObservation"}},
+        "precision": {"type": "object", "additionalProperties": {"$ref": "#/$defs/gateObservation"}}
+      }
+    },
+    "gateRecords": {"$ref": "#/$defs/familyGateObjects"},
+    "attestation": {"type": "object"},
+    "adjudications": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["validity", "substantive", "precision"],
+      "properties": {
+        "validity": {"type": "object", "additionalProperties": {"$ref": "#/$defs/attestation"}},
+        "substantive": {"type": "object", "additionalProperties": {"$ref": "#/$defs/attestation"}},
+        "precision": {"type": "object", "additionalProperties": {"$ref": "#/$defs/attestation"}}
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "simulation-rule-ladder",
+  "statement": "For the declared synthetic scenarios, the current release Full rule classifies missing required calibration as not assessable and routes a declared inference-method mismatch to inconclusive rather than returning a supported energy-claim state.",
+  "evidence_profile": "L0",
+  "boundary": {
+    "energy": "Deterministic simulated block-contrast values; no physical energy measurement is claimed.",
+    "service": "Synthetic classification behavior under declared scenario parameters.",
+    "exclusions": ["sensor validity", "GPU energy", "deployment performance", "environmental outcome"]
+  },
+  "functional_unit": "simulated classification probability",
+  "threshold_rationale": {"simulation_draws": 100000, "random_seed": 20260719},
+  "declared_required_gates": {
+    "validity": ["boundary_declared", "recorded_sequence_identified", "integration_method_declared"],
+    "substantive": ["numerical_stability_statement"],
+    "precision": ["integration_sensitivity_reported"]
+  },
+  "gates": {
+    "validity": {
+      "boundary_declared": {"status": "pass", "evidence": "Synthetic boundary is declared."},
+      "recorded_sequence_identified": {"status": "pass", "evidence": "Seeded public simulation code and scenarios are retained."},
+      "integration_method_declared": {"status": "pass", "evidence": "Classification rules and output aggregation are declared."}
+    },
+    "substantive": {
+      "numerical_stability_statement": {"status": "pass", "evidence": "The claim concerns deterministic rule behavior, not a physical-energy effect."}
+    },
+    "precision": {
+      "integration_sensitivity_reported": {"status": "pass", "evidence": "100,000 draws and seed are declared."}
+    }
+  },
+  "permitted_wording": "Supported only as a deterministic synthetic rule-behavior statement.",
+  "prohibited_wording": ["physical calibration", "real deployment validation", "organizational assurance effectiveness"]
+}

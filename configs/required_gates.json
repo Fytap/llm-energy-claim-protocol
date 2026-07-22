@@ -1,0 +1,31 @@
+{
+  "protocol_version": "current release",
+  "description": "Mandatory minimum gate registry. The evaluator, rather than the caller, derives required gates from evidence_profile. Additional gates may be declared only from the registered vocabulary. Claims relying on block-level uncertainty must document serial-dependence assessment and use an interval method compatible with the declared dependence structure.",
+  "levels": {
+    "L0": {
+      "validity": ["boundary_declared", "recorded_sequence_identified", "integration_method_declared"],
+      "substantive": ["numerical_stability_statement"],
+      "precision": ["integration_sensitivity_reported"]
+    },
+    "L1": {
+      "validity": ["boundary_declared", "required_gate_set_complete", "runtime_provenance_status", "design_integrity", "mapping_period_separability", "serial_dependence_assessed", "continuous_duration", "telemetry_gap", "endpoint_bracketing", "integration_stability"],
+      "substantive": ["functional_unit_declared", "fixed_work_unit", "benefit_threshold"],
+      "precision": ["interval_rule", "dependence_compatible_interval", "block_replication", "directional_agreement"]
+    },
+    "L2": {
+      "validity": ["boundary_declared", "required_gate_set_complete", "runtime_provenance_status", "design_integrity", "serial_dependence_assessed", "external_device_calibration", "meter_synchronization", "trace_completeness"],
+      "substantive": ["functional_unit_declared", "paired_task_quality", "benefit_threshold"],
+      "precision": ["interval_rule", "dependence_compatible_interval", "block_replication", "directional_agreement"]
+    },
+    "L3": {
+      "validity": ["boundary_declared", "required_gate_set_complete", "runtime_provenance_status", "design_integrity", "serial_dependence_assessed", "whole_server_metering", "meter_synchronization", "trace_completeness"],
+      "substantive": ["functional_unit_declared", "paired_task_quality", "sla_feasibility", "benefit_threshold"],
+      "precision": ["interval_rule", "dependence_compatible_interval", "block_replication", "directional_agreement"]
+    },
+    "L4": {
+      "validity": ["boundary_declared", "required_gate_set_complete", "runtime_provenance_status", "design_integrity", "serial_dependence_assessed", "facility_or_site_boundary", "site_signal_provenance", "observed_arrival_and_eligibility", "queue_log_integrity"],
+      "substantive": ["functional_unit_declared", "paired_task_quality", "sla_feasibility", "feasible_operational_policy", "attribution_boundary", "benefit_threshold"],
+      "precision": ["interval_rule", "dependence_compatible_interval", "block_replication", "directional_agreement"]
+    }
+  }
+}

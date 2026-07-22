@@ -1,0 +1,44 @@
+{
+  "id": "telemetry-case-b",
+  "statement": "Under the declared L1 NVML boundary, GPTQ reduces mWh per forced 512 completion tokens by more than 2% relative to AWQ.",
+  "evidence_profile": "L1",
+  "boundary": {
+    "energy": "NVML GPU board-power telemetry integrated over concurrent request windows on two RTX 5090 GPUs.",
+    "service": "Eight concurrent fixed-prompt requests per format session, forced to 512 completion tokens.",
+    "exclusions": ["external calibration", "whole-server energy", "task-quality outcome", "site electricity", "lifecycle accounting"]
+  },
+  "functional_unit": "mWh per forced completion token",
+  "threshold_rationale": {"sesoi_percent": 2.0, "status": "post-collection illustrative L1 screen; not a universal default"},
+  "declared_required_gates": {
+    "validity": ["boundary_declared", "required_gate_set_complete", "runtime_provenance_status", "design_integrity", "mapping_period_separability", "serial_dependence_assessed", "continuous_duration", "telemetry_gap", "endpoint_bracketing", "integration_stability"],
+    "substantive": ["functional_unit_declared", "fixed_work_unit", "benefit_threshold"],
+    "precision": ["interval_rule", "dependence_compatible_interval", "block_replication", "directional_agreement"]
+  },
+  "gates": {
+    "validity": {
+      "boundary_declared": {"status": "pass", "evidence": "Declared boundary fields are complete."},
+      "required_gate_set_complete": {"status": "pass", "evidence": "current release registry comparison is performed by the evaluator."},
+      "runtime_provenance_status": {"status": "missing", "evidence": "Driver, firmware, power cap, clock policy, temperature trace and immutable runtime commit were not preserved."},
+      "design_integrity": {"status": "invalid", "evidence": "The physical-GPU mapping changed once after block 5, while direction reverses by phase."},
+      "mapping_period_separability": {"status": "invalid", "evidence": "Map, period and unrecorded platform state cannot be separated."},
+      "serial_dependence_assessed": {"status": "invalid", "evidence": "Ten sequential blocks and one map exchange do not support a reliable serial-dependence assessment."},
+      "continuous_duration": {"status": "pass", "evidence": "34.509-34.873 s passes the post-collection 25-s screen."},
+      "telemetry_gap": {"status": "pass", "evidence": "Largest gap 0.05039 s."},
+      "endpoint_bracketing": {"status": "pass", "evidence": "All windows bracketed."},
+      "integration_stability": {"status": "pass", "evidence": "p95 stride-2 absolute difference 0.0414 percentage points."}
+    },
+    "substantive": {
+      "functional_unit_declared": {"status": "pass", "evidence": "mWh per forced completion token."},
+      "fixed_work_unit": {"status": "pass", "evidence": "512 forced completion tokens per request."},
+      "benefit_threshold": {"status": "fail", "evidence": "The historical pooled upper one-sided bound was 1.249%, below the 2% claim threshold; retained as an audit tag only."}
+    },
+    "precision": {
+      "interval_rule": {"status": "fail", "evidence": "Historical one-sided lower bound -2.184%."},
+      "dependence_compatible_interval": {"status": "invalid", "evidence": "The historical iid t interval was not predeclared or shown compatible with potential block dependence."},
+      "block_replication": {"status": "pass", "evidence": "10 recorded paired blocks."},
+      "directional_agreement": {"status": "fail", "evidence": "5 of 10 blocks favor GPTQ."}
+    }
+  },
+  "permitted_wording": "Not assessable with available evidence: the one-time mapping exchange, unpreserved platform state and unassessed dependence structure violate L1 dependencies; pooled estimates are audit tags only.",
+  "prohibited_wording": ["GPTQ is contradicted as a configuration effect", "format ranking", "physical energy reduction", "whole-system reduction", "carbon reduction"]
+}
