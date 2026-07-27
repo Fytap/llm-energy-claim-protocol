@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.invalid/llm-energy-claim-artifact/claim-object.schema.json",
+  "$id": "https://example.invalid/llm-energy-claim-protocol/claim-object.schema.json",
   "title": "Registry-relative claim object",
   "type": "object",
   "additionalProperties": false,

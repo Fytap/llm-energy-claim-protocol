@@ -1,6 +1,28 @@
 {
-  "protocol_version": "current release",
-  "description": "Mandatory minimum gate registry. The evaluator, rather than the caller, derives required gates from evidence_profile. Additional gates may be declared only from the registered vocabulary. Claims relying on block-level uncertainty must document serial-dependence assessment and use an interval method compatible with the declared dependence structure.",
+  "protocol_version": "1.2.0",
+  "description": "Author-built registry-relative gate registry for structural claim-record checks. The evaluator, rather than the caller, derives proposed gates from evidence_profile. This registry is not an independently content-validated standard and does not establish that its gates are necessary, sufficient, complete, or correctly profiled. Claims relying on block-level uncertainty must document serial-dependence assessment and use an interval method compatible with the declared dependence structure.",
+  "provenance_policy": {
+    "max_attestation_age_days": 365,
+    "path_format": "relative_posix_no_parent",
+    "require_manifest_sequence": true,
+    "require_local_integrity_token": true,
+    "evidence_reuse_policy": "One evidence identifier may support multiple gates only when the manifest explicitly lists every permitted gate and every claim identifier. Reuse under a different evidence identifier with the same local digest is rejected as a copied-file ambiguity. This local policy is not a semantic duplicate detector or a cross-run replay ledger.",
+    "security_boundary": "The engine detects accidental local inconsistencies in supplied paths, digests, sequence fields, authorization fields and an optional locally pinned integrity token. It does not authenticate people, verify cryptographic signatures, provide trusted time, prevent coordinated manifest replacement, resist a malicious package author, or independently adjudicate evidence. Signed provenance, trusted timestamps, transparency logs and in-toto/SLSA-style attestations are migration targets outside this prototype."
+  },
+  "required_reviewer_roles": {
+    "validity.*": "measurement_assurance_reviewer",
+    "substantive.*": "service_owner_reviewer",
+    "precision.*": "statistical_reviewer",
+    "validity.external_device_calibration": "metrology_reviewer",
+    "validity.whole_server_metering": "metrology_reviewer",
+    "validity.facility_or_site_boundary": "operations_reviewer",
+    "validity.site_signal_provenance": "sustainability_reviewer",
+    "validity.queue_log_integrity": "operations_reviewer",
+    "substantive.paired_task_quality": "service_owner_reviewer",
+    "substantive.sla_feasibility": "operations_reviewer",
+    "substantive.feasible_operational_policy": "operations_reviewer",
+    "substantive.attribution_boundary": "sustainability_reviewer"
+  },
   "levels": {
     "L0": {
       "validity": ["boundary_declared", "recorded_sequence_identified", "integration_method_declared"],

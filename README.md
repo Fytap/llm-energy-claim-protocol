@@ -1,35 +1,50 @@
-# LLM Energy-Claim Protocol Artifact
+# LLM Energy Claim-Protocol Artifact
 
-This repository contains the public computational artifact accompanying a
-registry-driven protocol for assessing the structural sufficiency of LLM
-energy-claim records. It includes anonymized telemetry examples, machine-readable
-claim objects, an executable gate engine, deterministic synthetic controls, and
-the scripts needed to reproduce the reported computational checks.
+This repository accompanies *A Registry-Relative Claim-Conformance Engine for
+GPU-Side LLM Energy Reporting*. It contains the machine-readable registry and
+claim-record schema, a deterministic conformance engine, synthetic controls,
+redacted historical serving records, and the scripts needed to reproduce the
+reported computational checks.
 
-The artifact is deliberately bounded. It does not contain credentials, host
-identifiers, absolute paths, model weights, author identities, personal data, or
-external meter records. Its outputs assess the completeness and internal
-consistency of declared evidence records; they do not independently validate
-physical energy, carbon, organizational, or environmental claims.
+The artifact checks the declared structural completeness and local consistency
+of evidence records. It does not independently validate physical energy,
+carbon, organizational, or environmental claims. The retained telemetry examples
+are not externally calibrated power measurements and do not support claims about
+whole-server, facility, or lifecycle impacts.
 
-## Reproduce
+## Quick start
+
+The package was checked with Python 3.12. Install the exact dependencies and run
+the documented entry point from the repository root:
 
 ```powershell
 python -m pip install -r requirements.txt
 python scripts/reproduce.py
 ```
 
-The command runs unit and mutation checks, recomputes the anonymized telemetry
-audits, evaluates every public claim object, generates dependence and decision
-rule simulations, and writes the regenerated files under `results/`.
+The command first verifies the SHA-256 manifest. It then runs 57 direct,
+state-transition, and metamorphic tests; 2,000 malformed-record fuzz inputs;
+15 deterministic source mutations; a structured JSON Schema contrast; synthetic
+operating-characteristic studies; and two figure-generation workflows. A
+successful run writes `results/reproduction_report.json` with `"status": "pass"`.
 
-## Layout
+For a compact reviewer workflow and expected outputs, see
+[`REVIEWER_QUICKSTART.md`](REVIEWER_QUICKSTART.md). The source-and-input
+integrity manifest is [`MANIFEST.sha256`](MANIFEST.sha256); it is verified by
+`scripts/verify_manifest.py` before computation begins.
 
-- `claims/`: machine-readable, anonymized claim objects.
-- `configs/`: gate registry, JSON schema, and dependence-handling guidance.
-- `data/`: anonymized telemetry and request-outcome records used by the examples.
+## Repository layout
+
+- `claims/`: bounded machine-readable claim records for the retained examples.
+- `configs/`: gate registry, JSON Schema, and dependence-handling guidance.
+- `data/`: redacted telemetry and request-outcome examples; see `data/README.md`.
 - `scripts/`: evaluator, analyses, simulations, plotting, tests, and entry point.
+- `templates/`: blank materials for future, separately administered evaluations.
+- `MANIFEST.sha256`: SHA-256 hashes for the shipped source and input payload.
 
-Dependency pins are retained in `requirements.txt` so that the computational
-environment can be recreated. They are software dependencies, not internal
-project or infrastructure identifiers.
+## Privacy and scope boundary
+
+The repository contains no credentials, host identifiers, absolute paths, model
+weights, personal data, or external meter records. It uses relative paths only.
+After dependency installation, the workflow requires neither an accelerator nor
+access to private infrastructure or network services.
