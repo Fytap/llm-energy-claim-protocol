@@ -13,11 +13,18 @@ MANIFEST = ROOT / "MANIFEST.sha256"
 
 
 def sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
+    """Hash source files reproducibly across LF and CRLF checkouts.
+
+    The shipped payload is UTF-8 text. Git and ZIP tools may materialize its
+    line endings differently on Windows, so text payloads are canonicalized to
+    LF before hashing. A non-UTF-8 file remains byte-for-byte hashed.
+    """
+    payload = path.read_bytes()
+    try:
+        payload = payload.decode("utf-8").replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
+    except UnicodeDecodeError:
+        pass
+    return hashlib.sha256(payload).hexdigest()
 
 
 def parse_manifest() -> list[tuple[str, Path]]:
